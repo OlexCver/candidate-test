@@ -1,8 +1,8 @@
 ﻿namespace TollFeeCalculator
 {
-    public class Diplomat : IVehicle
+    public class Diplomat : IVechicleType
     {
-        public TollFreeVehicles GetVehicleType() => TollFreeVehicles.Diplomat;
+        public VehiclesTypes GetVehicleType => VehiclesTypes.Diplomat;
     }
 
 }

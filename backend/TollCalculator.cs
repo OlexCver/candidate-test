@@ -1,10 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TollFeeCalculator
 {
     public class TollCalculator : ITollCalculator
     {
+
+        const int maxFee = 60;
+        private readonly ICanCalculateTollByDate calculatorByDate;
+        private readonly ICanResolveIfTollFree tollFreeQualifier;
+
         /**
          * Calculate the total toll fee for one day
          *
@@ -13,52 +19,58 @@ namespace TollFeeCalculator
          * @return - the total toll fee for that day
          */
 
-        private readonly ITollFreeQualifier TollFreeQualifier;
 
 
-        public TollCalculator(ITollFreeQualifier tollFreeQualifier) 
-            => TollFreeQualifier = tollFreeQualifier;
-
-
-        //TODO: need to simplify this
-        public int GetTollFee(IVehicle vehicle, DateTime[] dates)
+        public TollCalculator(ICanCalculateTollByDate calculatorByDate, ICanResolveIfTollFree tollFreeQualifier)
         {
-            return dates.Aggregate(0, (totalFee, date) =>
-                 {
-                     int nextFee  = GetTollFee(date, vehicle);
-                     int tempFee  = GetTollFee(dates[0], vehicle);
-                     long minutes = (date.Millisecond - dates[0].Millisecond) / 1000 / 60;
+            this.calculatorByDate  = calculatorByDate;
+            this.tollFreeQualifier = tollFreeQualifier;
 
-                     if (minutes > 60)
-                     {
-                         totalFee += nextFee;
-                         return totalFee;
-                     }
-                     if (totalFee > 0)
-                     {
-                         totalFee -= tempFee;
-                     }
-                     if (nextFee >= tempFee) 
-                     {
-                         tempFee = nextFee;
-                     }
-
-                     totalFee += tempFee;
-                     return totalFee;
-                 }
-             ) switch
-             {
-                 var total when total > 60   => 60,
-                 var total when total <= 60  => total
-             };
         }
 
 
-        private int GetTollFee(DateTime date, IVehicle vehicle)
-            => TollFreeQualifier.IsTollFree(vehicle, date) switch
+        //TODO: still need to simplify this
+        public int GetTollFee(IVechicleType vehicle, List<DateTime> dates)
+        {
+            if (tollFreeQualifier.IsTollFreeVehicle(vehicle)) 
             {
-                true  => 0,
-                false => TollCalculatorFactory.GetTollCalculatorByTimeSlot(date)
+                return 0;
+            }
+            int total = dates.OrderBy(d => d)
+                             .Aggregate(0, (totalFee, date) =>
+                             {
+                                 if (tollFreeQualifier.IsTollFreeDate(date))
+                                 {
+                                     return totalFee;
+                                 }
+
+                                 int nextFee      = calculatorByDate.TollCalculatorByDate(date);
+                                 int feeFromStart = calculatorByDate.TollCalculatorByDate(dates[0]);
+                                 long minutes = (date.Millisecond - dates[0].Millisecond) / 1000 / 60;
+
+                                 if (minutes > 60)
+                                 {
+                                     totalFee += nextFee;
+                                     return totalFee;
+                                 }
+                                 if (totalFee > 0)
+                                 {
+                                     totalFee -= feeFromStart;
+                                 }
+                                 if (nextFee >= feeFromStart)
+                                 {
+                                     feeFromStart = nextFee;
+                                 }
+
+                                 totalFee += feeFromStart;
+                                 return totalFee;
+                             }); 
+
+            return total switch
+            {
+                > maxFee => maxFee,
+                _        => total
             };
+        }
     }
 }

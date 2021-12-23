@@ -1,0 +1,15 @@
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.AssemblyInfoInputs.cache
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.AssemblyInfo.cs
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.csproj.CoreCompileInputs.cache
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.exe
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.deps.json
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.runtimeconfig.json
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.runtimeconfig.dev.json
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.dll
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\ref\FeesCalculator.dll
+C:\Tests\candidate-test\backend\bin\Debug\net5.0\FeesCalculator.pdb
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.dll
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\ref\FeesCalculator.dll
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.pdb
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.genruntimeconfig.cache
