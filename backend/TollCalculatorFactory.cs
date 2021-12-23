@@ -22,7 +22,7 @@ namespace TollFeeCalculator
                            => 9,
                     var timeSlot when (timeSlot.Hour == 15 && timeSlot.Minute >= 0 && timeSlot.Minute <= 29)
                            => 16,
-                    var timeSlot when (timeSlot.Hour == 15 && timeSlot.Minute >= 0 || timeSlot.Hour == 16 && timeSlot.Minute <= 59)
+                    var timeSlot when ((timeSlot.Hour == 15 && timeSlot.Minute >= 0) || (timeSlot.Hour == 16 && timeSlot.Minute <= 59))
                            => 22,
                     var timeSlot when (timeSlot.Hour == 17 && timeSlot.Minute >= 0 && timeSlot.Minute <= 59)
                            => 16,

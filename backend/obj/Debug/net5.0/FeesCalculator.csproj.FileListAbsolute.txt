@@ -13,3 +13,4 @@ C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.dll
 C:\Tests\candidate-test\backend\obj\Debug\net5.0\ref\FeesCalculator.dll
 C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.pdb
 C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.genruntimeconfig.cache
+C:\Tests\candidate-test\backend\obj\Debug\net5.0\FeesCalculator.csproj.AssemblyReference.cache

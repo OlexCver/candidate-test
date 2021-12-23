@@ -9,8 +9,7 @@ namespace TollFeeCalculator
 
         public bool IsTollFreeVehicle(IVechicleType vehicle) 
             => TollFreeQualifierFactory.GetFreeTollList
-                                       .Any(noPay => vehicle != null && 
-                                                     vehicle.GetVehicleType.Equals(noPay));
+                                       .Any(noPay => vehicle.GetVehicleType.Equals(noPay));
 
         public bool IsTollFreeDate(DateTime date)
             => TollCalculatorFactory.GetFreeToolDatesQualifier(date);

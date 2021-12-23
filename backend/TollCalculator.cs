@@ -29,42 +29,42 @@ namespace TollFeeCalculator
         }
 
 
-        //TODO: still need to simplify this
+        //TODO: still need to refactor this as it seems wrong calculation
         public int GetTollFee(IVechicleType vehicle, List<DateTime> dates)
         {
-            if (tollFreeQualifier.IsTollFreeVehicle(vehicle)) 
+            if (tollFreeQualifier.IsTollFreeVehicle(vehicle) || !dates.Any()) 
             {
                 return 0;
             }
-            int total = dates.OrderBy(d => d)
-                             .Aggregate(0, (totalFee, date) =>
-                             {
-                                 if (tollFreeQualifier.IsTollFreeDate(date))
-                                 {
-                                     return totalFee;
-                                 }
+            var orderedDates = dates.OrderBy(d => d)
+                                    .ToList();
 
-                                 int nextFee      = calculatorByDate.TollCalculatorByDate(date);
-                                 int feeFromStart = calculatorByDate.TollCalculatorByDate(dates[0]);
-                                 long minutes = (date.Millisecond - dates[0].Millisecond) / 1000 / 60;
+            var previousDate = orderedDates[0];
+            var previousFee = calculatorByDate.TollCalculatorByDate(previousDate);
 
-                                 if (minutes > 60)
-                                 {
-                                     totalFee += nextFee;
-                                     return totalFee;
-                                 }
-                                 if (totalFee > 0)
-                                 {
-                                     totalFee -= feeFromStart;
-                                 }
-                                 if (nextFee >= feeFromStart)
-                                 {
-                                     feeFromStart = nextFee;
-                                 }
+            int total = orderedDates.Aggregate(0, (totalFee, date) =>
+                        {
+                            if (tollFreeQualifier.IsTollFreeDate(date))
+                            {
+                                previousDate = date;
+                                previousFee  = 0;
+                                return totalFee;
+                            }
 
-                                 totalFee += feeFromStart;
-                                 return totalFee;
-                             }); 
+                            var nextFee   = calculatorByDate.TollCalculatorByDate(date);
+                            var minutes   = (date - previousDate).TotalMinutes;
+                            totalFee += (minutes > 60) switch 
+                            { 
+                                true                      => nextFee,
+                                false when (totalFee > 0) => Math.Max(nextFee, previousFee) - previousFee,
+                                _                         => Math.Max(nextFee, previousFee),
+                            };
+
+                            previousDate = date;
+                            previousFee  = nextFee;
+
+                            return totalFee;
+                        }); 
 
             return total switch
             {
