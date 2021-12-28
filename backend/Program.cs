@@ -51,7 +51,7 @@ namespace TollFeeCalculator
             Console.WriteLine($"{nameof(resultEmergencyNoFee)}: {resultEmergencyNoFee}");
 
             //Without Fee
-            var resultDiplomatNoFee = calculator.GetTollFee(new Emergency(), dates);
+            var resultDiplomatNoFee = calculator.GetTollFee(new Diplomat(), dates);
             Console.WriteLine($"{nameof(resultDiplomatNoFee)}: {resultDiplomatNoFee}");
 
 
