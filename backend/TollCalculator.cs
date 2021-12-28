@@ -29,7 +29,6 @@ namespace TollFeeCalculator
         }
 
 
-        //TODO: still need to refactor this as it seems wrong calculation
         public int GetTollFee(IVechicleType vehicle, List<DateTime> dates)
         {
             if (tollFreeQualifier.IsTollFreeVehicle(vehicle) || !dates.Any()) 

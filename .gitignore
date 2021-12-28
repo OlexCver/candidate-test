@@ -1,0 +1,11 @@
+/FeesCalculatorTest/obj/Debug/*
+/backend/bin/*
+/backend/obj/Debug/net5.0/*
+/backend/obj/*
+/FeesCalculatorTest/bin/Debug/net5.0/*
+/FeesCalculatorTest/obj/*
+/.vs/*
+/backend/.vs/FeesCalculator/*
+/.vs/*
+/.vs/slnx.sqlite
+/backend/.vs/FeesCalculator/v16/.suo
